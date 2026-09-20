@@ -100,6 +100,10 @@ check('open in a new tab', tg.newTab === true)
 check('have rel=noopener (safe)', tg.hasRel === true)
 
 /* ── 5. Switch to Arabic ────────────────────────────────────────── */
+// The saved language persists in localStorage, so make sure we are starting
+// from English before looking for the "switch to Arabic" control.
+await evaluate(`(() => { try { localStorage.setItem('nuvella.lang','en') } catch(e){} return true })()`)
+await reload()
 await evaluate(`(() => {
   const b = [...document.querySelectorAll('button')].find(x => /Switch to Arabic|العربية/i.test(x.getAttribute('aria-label')||'') || /العربية/.test(x.innerText))
   b.click(); return true
@@ -199,6 +203,9 @@ await evaluate(`(() => {
   return true
 })()`)
 await sleep(600)
+// Same as above: reset to Arabic first so the English switch control exists.
+await evaluate(`(() => { try { localStorage.setItem('nuvella.lang','ar') } catch(e){} return true })()`)
+await reload()
 await evaluate(`(() => {
   const b = [...document.querySelectorAll('button')].find(x => /Switch to English|English/i.test(x.getAttribute('aria-label')||'') || /English/.test(x.innerText))
   b.click(); return true

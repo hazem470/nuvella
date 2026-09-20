@@ -25,13 +25,15 @@ Requires Node 18+.
 
 | | |
 |---|---|
-| **Brand name** | **Nuvella** |
-| **Product name** | **Daily Comfort Baby Lotion** |
-| **Tagline** | *Quiet comfort for delicate skin.* |
-| **Slogan** | *Softness, every single day.* |
+| **Brand name** | **Nuvella** / **نوفيـلا** |
+| **Product name** | **Daily Comfort Baby Lotion** / **لوشن الراحة اليومية للأطفال** |
+| **Tagline** | *Quiet comfort for delicate skin.* / *راحة هادئة للبشرة الرقيقة.* |
+| **Slogan** | *Softness, every single day.* / *نعومة، كل يوم.* |
 | **Personality** | Gentle · Calm · Thoughtful · Unfussy · Quietly premium |
 | **Target customer** | Parents and caregivers of babies and toddlers (0–3) who read labels, value simplicity, and want a premium everyday product they can trust without thinking about it |
 | **Positioning** | A short, considered formula — 22 ingredients, no dyes, no drying alcohols, no essential oils |
+| **Market** | Egypt — prices in **EGP**, delivery 60 EGP (free over 750 EGP) |
+| **Status** | **Pre-launch** — products in preparation, announced via Telegram |
 
 **Brand story** (in `brand.story`): built around the minute after the bath — one honest product made
 to be part of the everyday, rather than a long routine.
@@ -46,8 +48,8 @@ to be part of the everyday, rather than a long routine.
 | Warm Charcoal | `#3A342E` | Text & detail |
 | Petal Blush | `#E8CFC4` | Soft highlight |
 
-**Typography** — *Fraunces* (humanist serif) for the wordmark, headlines and step numbers;
-*DM Sans* (geometric sans) for body copy, navigation and UI.
+**Typography** — *Fraunces* (humanist serif) for the Latin wordmark and headlines; *DM Sans* for
+Latin body copy; *Tajawal* for all Arabic text (applied automatically via `html[lang='ar']`).
 
 **Visual identity** — a soft clay-rose arc motif over the wordmark, an amber-tinted matte bottle,
 and a warm-neutral editorial photographic style (soft directional light, generous negative space).
@@ -64,7 +66,7 @@ and a warm-neutral editorial photographic style (soft directional light, generou
 | **Label** | Wrap-around textured paper, letterpress wordmark, clay-rose arc motif, sage base band; front carries only brand, product name and volume |
 | **Carton** | Uncoated FSC-certified board, clay-rose foil wordmark, debossed arc, soy-based inks, fully recyclable, no plastic film |
 | **Editions** | Scented (soft oat-milk, under 0.3%) and Unscented |
-| **Price (demo)** | $24.00 (compare-at $29.00) · free shipping over $60 |
+| **Price** | **349 EGP** (compare-at 429 EGP) · delivery 60 EGP, free over 750 EGP |
 
 Full description, six key features, three-step how-to-use, ingredient concept and the complete
 safety/warning list live in `src/data/brand.js`.
@@ -92,6 +94,97 @@ Each is labelled *"Demo visual — replace with product photography"* on-page.
 point `imageAssets` in `src/data/brand.js` at new paths. The **Photography Briefs** panel at the
 bottom of the site (`src/components/ImageBriefs.jsx`) documents the art direction and a
 ready-to-use generation prompt for each of the six shots.
+
+---
+
+---
+
+## 3b. Bilingual support (English + Arabic)
+
+| | |
+|---|---|
+| **Default language** | English (LTR) |
+| **Second language** | العربية (RTL) |
+| **Switcher** | Pill button in the navbar — flag + label, always visible on every breakpoint |
+| **Persistence** | Saved to `localStorage` (`nuvella.lang`); survives refresh and revisits |
+| **Direction** | `<html lang>` and `<html dir>` are set on every switch; `body` mirrors `dir` too |
+| **Arabic font** | Tajawal / Cairo applied via `html[lang='ar']` — Latin display fonts are dropped so the script never falls back to a mismatched face |
+
+**Where the copy lives**
+
+```
+src/i18n/content.en.js   ← English dictionary (structure reference)
+src/i18n/content.ar.js   ← Arabic dictionary (mirrors en key-for-key)
+src/i18n/LanguageContext.jsx  ← provider: t, dir, isRTL, price(), toggle()
+```
+
+Components never hard-code copy — they read `t.ui.shopNow`, `t.faqs`, `t.product.features`, etc.
+Add a key to **both** dictionaries and it works in both languages automatically.
+
+**RTL implementation** — the layout uses CSS logical properties throughout (`start`/`end`,
+`ms`/`me`, `ps`/`pe`) instead of `left`/`right`, so the whole page mirrors from a single
+`dir="rtl"` attribute. The cart drawer slides in from the correct edge in both directions, the
+gallery's arrow keys follow the writing direction, and the star-rating row is pinned LTR so stars
+always fill left-to-right.
+
+**Latin-only strings** (the wordmark, phone number, Telegram handle, generation prompts) are pinned
+`dir="ltr"` so they never scramble inside Arabic text.
+
+---
+
+## 3c. Pre-launch state
+
+`src/config.js` has a single `preLaunch` flag. While `true`:
+
+- the slim "Coming Soon" banner shows above the navbar
+- the product badge reads **Pre-launch** instead of *In stock*
+- a notice under the price explains that orders open on launch day
+- the cart's checkout button explains that checkout opens on launch day
+- a **Telegram** button is promoted in the cart, the FAQ card, the final CTA and the footer
+
+Set `preLaunch: false` on launch day to switch all of it off.
+
+---
+
+## 3d. Egyptian pricing — change it in one place
+
+All prices live in `src/config.js`:
+
+```js
+pricing: {
+  price: 349,              // selling price in EGP
+  compareAt: 429,          // struck-through "was" price
+  currency: 'EGP',
+  freeShippingThreshold: 750,
+  shippingFee: 60,
+}
+```
+
+Edit those numbers and the whole site updates — hero, product section, cart drawer, totals and the
+shipping nudge. Formatting is automatic: **`349 EGP`** in English, **`349 جنيه`** in Arabic.
+
+Pricing was set to the Egyptian market for a premium 250 ml baby lotion; comparable products
+retail around 300–450 EGP. Adjust freely.
+
+---
+
+## 3e. Telegram contact
+
+`src/config.js`:
+
+```js
+contact: {
+  telegram: {
+    username: 'Hazem455ziad',
+    url: 'https://t.me/Hazem455ziad',
+    rel: 'noopener noreferrer',
+  },
+},
+```
+
+Opens in a new tab on desktop; on mobile the `t.me` universal link hands off to the Telegram app
+and falls back to the web profile if it is not installed. The icon appears in the announcement
+banner, the cart drawer, the FAQ contact card, the final CTA and the footer.
 
 ---
 
@@ -245,28 +338,41 @@ nuvella/
 └── src/
     ├── main.jsx
     ├── App.jsx
-    ├── index.css               # base layer, component classes, utilities
-    ├── data/brand.js           # ← ALL brand, product, copy and content data
+    ├── index.css                # base layer, component classes, RTL utilities
+    ├── config.js                # ← pricing, Telegram, preLaunch flag (ONE place)
+    ├── i18n/
+    │   ├── content.en.js        # ← English copy (structure reference)
+    │   ├── content.ar.js        # ← Arabic copy (mirrors en key-for-key)
+    │   └── LanguageContext.jsx  # provider: t, dir, isRTL, price(), toggle()
     ├── context/CartContext.jsx
     ├── hooks/useReveal.js
-    └── components/             # 18 reusable components
+    └── components/              # 21 reusable components
+        ├── AnnouncementBanner.jsx   # pre-launch "Coming Soon" bar
+        ├── LanguageSwitcher.jsx     # EN ⇄ AR toggle
+        └── TelegramButton.jsx       # t.me/Hazem455ziad
 ```
 
 ---
 
 ## 9. Verification
 
-The built site was driven in a real headless Chromium browser (Edge, CDP) and **24/24 functional
-checks pass** — cart add/remove/persist, drawer open/close, quantity stepper, totals and free
-shipping, FAQ accordion, gallery switching, edition selector, legal modal, mobile menu, zero
-horizontal overflow at 390 px, SEO/JSON-LD and LTR/English-only.
+The site is driven in a real headless Chromium browser (Edge over CDP) — no test framework needed.
+
+| Suite | Result | Covers |
+|---|---|---|
+| `scripts/test-i18n.mjs` | **41/41** | language switch, RTL/LTR, persistence across reload, EGP in both languages, Telegram links, banner, cart + FAQ in Arabic, mobile RTL overflow, JS errors |
+| `scripts/interaction-test.mjs` | **24/24** | cart add/remove/persist, drawer, quantity stepper, totals, free shipping, FAQ, gallery, edition selector, legal modal, mobile menu, SEO/JSON-LD |
+| `scripts/test-standalone.mjs` | **10/10** | the single-file offline build from `file://` |
 
 ```bash
 npx vite build
 npx vite preview --port 4178
 # in another shell, with Edge running: --remote-debugging-port=9333
-node scripts/interaction-test.mjs
+node scripts/test-i18n.mjs
 ```
+
+Run the i18n suite against the live deployment by passing the URL:
+`node scripts/test-i18n.mjs https://hazem470.github.io/nuvella/`
 
 ---
 
