@@ -1,0 +1,17 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+.env
+.env.local
+npm-debug.log*
+yarn-error.log*
+
+# cloudflared is a 53 MB downloaded binary, not source — never commit it.
+# tools/start-nuvella.sh re-downloads it automatically on first run.
+tools/cloudflared
+tools/cloudflared.exe
+
+# Generated single-file build (345 KB, reproducible via scripts/build-standalone.mjs)
+preview/*.html

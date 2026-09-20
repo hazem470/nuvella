@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   Nuvella — base layer
+   ───────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --navella-cream: #faf6f1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-cream-100 text-ink-700 font-sans antialiased;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-ink-900;
+    letter-spacing: -0.015em;
+  }
+
+  /* Visible, elegant focus ring for keyboard users (a11y) */
+  :focus-visible {
+    outline: 2px solid theme('colors.clay.500');
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: theme('colors.clay.300');
+    color: theme('colors.ink.900');
+  }
+
+  /* Soft scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: theme('colors.cream.200');
+  }
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.clay.300');
+    border-radius: 999px;
+    border: 2px solid theme('colors.cream.200');
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: theme('colors.clay.400');
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Reusable component classes
+   ───────────────────────────────────────────────────────────── */
+@layer components {
+  .container-nuvella {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+  }
+
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-full text-[0.95rem] font-medium
+           transition-all duration-300 ease-out disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-lg {
+    @apply px-8 py-4 text-base;
+  }
+
+  .btn-md {
+    @apply px-6 py-3;
+  }
+
+  .btn-sm {
+    @apply px-4 py-2 text-sm;
+  }
+
+  .btn-primary {
+    @apply bg-clay-500 text-cream-50 shadow-glow hover:-translate-y-0.5 hover:bg-clay-600
+           active:translate-y-0 active:bg-clay-700;
+  }
+
+  .btn-secondary {
+    @apply border border-ink-700/15 bg-transparent text-ink-700 hover:-translate-y-0.5
+           hover:border-ink-700/30 hover:bg-cream-200;
+  }
+
+  .btn-ghost {
+    @apply text-ink-600 hover:bg-cream-200 hover:text-ink-900;
+  }
+
+  .btn-sage {
+    @apply bg-sage-500 text-cream-50 shadow-soft hover:-translate-y-0.5 hover:bg-sage-600;
+  }
+
+  .card {
+    @apply rounded-3xl border border-ink-700/5 bg-cream-50 shadow-soft transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply hover:-translate-y-1.5 hover:border-clay-300/60 hover:shadow-lift;
+  }
+
+  .eyebrow {
+    @apply mb-4 inline-flex items-center gap-2 text-[0.7rem] font-medium uppercase tracking-[0.22em] text-clay-500;
+  }
+
+  .section {
+    @apply py-20 sm:py-24 lg:py-28;
+  }
+
+  .hairline {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-ink-700/10 to-transparent;
+  }
+
+  /* Reveal-on-scroll: starts hidden, animates in when observed */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .link-underline {
+    @apply relative text-ink-600 transition-colors duration-300 hover:text-ink-900;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute -bottom-0.5 left-0 h-px w-0 bg-clay-500 transition-all duration-300;
+  }
+  .link-underline:hover::after {
+    @apply w-full;
+  }
+
+  .field {
+    @apply w-full rounded-2xl border border-ink-700/10 bg-cream-50 px-4 py-3 text-sm text-ink-700
+           placeholder:text-ink-400 focus:border-clay-400 focus:outline-none;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
+}
+
+/* Respect reduced-motion preferences (a11y) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

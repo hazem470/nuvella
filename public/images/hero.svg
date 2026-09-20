@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="Demo hero visual: Nuvella Daily Comfort Baby Lotion bottle on a warm cream pedestal, placeholder for product photography">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#FDFBF9"/>
+      <stop offset="55%" stop-color="#F7EFE7"/>
+      <stop offset="100%" stop-color="#EEE2D6"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.32" cy="0.22" r="0.72">
+      <stop offset="0%" stop-color="#FFFDFB" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFFDFB" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#D9AF95"/>
+      <stop offset="18%" stop-color="#EBCFBC"/>
+      <stop offset="42%" stop-color="#F3E0D2"/>
+      <stop offset="62%" stop-color="#E4C3AC"/>
+      <stop offset="100%" stop-color="#C79C82"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#B6AFA6"/>
+      <stop offset="22%" stop-color="#E6E1DA"/>
+      <stop offset="50%" stop-color="#CFC8BF"/>
+      <stop offset="78%" stop-color="#EDE8E1"/>
+      <stop offset="100%" stop-color="#AEA79E"/>
+    </linearGradient>
+    <linearGradient id="label" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#F2E7DB"/>
+      <stop offset="50%" stop-color="#FCF7F1"/>
+      <stop offset="100%" stop-color="#EADCCD"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+    <filter id="softer" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="34"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <rect width="800" height="1000" fill="url(#glow)"/>
+
+  <!-- soft arc motif echoing the label -->
+  <path d="M60 780 C 240 560 560 560 740 780" fill="none" stroke="#B87F68" stroke-opacity="0.16" stroke-width="2"/>
+  <path d="M60 830 C 240 610 560 610 740 830" fill="none" stroke="#7E9A78" stroke-opacity="0.13" stroke-width="2"/>
+
+  <!-- background foliage removed: the blurred leaf read as a rendering artefact -->
+
+  <!-- pedestal -->
+  <ellipse cx="400" cy="884" rx="230" ry="34" fill="#C9A88F" opacity="0.28" filter="url(#softer)"/>
+  <path d="M212 856 L588 856 L566 906 L234 906 Z" fill="#F4EAE0"/>
+  <path d="M212 856 L588 856 L583 868 L217 868 Z" fill="#E7D8C9"/>
+
+  <!-- bottle -->
+  <g>
+    <!-- cast shadow -->
+    <ellipse cx="424" cy="866" rx="120" ry="20" fill="#8C6A55" opacity="0.3" filter="url(#soft)"/>
+
+    <!-- pump: nozzle -->
+    <path d="M330 214 L362 214 L362 240 L330 240 Q320 240 320 227 Q320 214 330 214 Z" fill="url(#metal)"/>
+    <!-- pump: actuator head -->
+    <rect x="352" y="200" width="96" height="42" rx="19" fill="url(#metal)"/>
+    <rect x="352" y="200" width="96" height="14" rx="7" fill="#FFFFFF" opacity="0.35"/>
+    <!-- stem -->
+    <rect x="384" y="238" width="32" height="40" rx="8" fill="#C4BDB4"/>
+    <!-- collar -->
+    <rect x="366" y="272" width="68" height="52" rx="12" fill="url(#metal)"/>
+    <rect x="366" y="286" width="68" height="3" fill="#8F887F" opacity="0.5"/>
+    <rect x="366" y="306" width="68" height="3" fill="#8F887F" opacity="0.35"/>
+
+    <!-- glass body -->
+    <path d="M372 324 L372 318 L428 318 L428 324
+             C 468 336 502 372 502 434
+             L 502 828
+             C 502 858 478 880 448 880
+             L 352 880
+             C 322 880 298 858 298 828
+             L 298 434
+             C 298 372 332 336 372 324 Z"
+          fill="url(#body)"/>
+
+    <!-- rim light -->
+    <path d="M316 452 L316 812 C316 838 332 856 356 860" fill="none" stroke="#FFF7EF" stroke-opacity="0.65" stroke-width="9" stroke-linecap="round"/>
+    <path d="M486 470 L486 800" fill="none" stroke="#A97F67" stroke-opacity="0.35" stroke-width="10" stroke-linecap="round"/>
+
+    <!-- label -->
+    <rect x="312" y="560" width="176" height="236" rx="14" fill="url(#label)"/>
+    <rect x="312" y="560" width="176" height="236" rx="14" fill="none" stroke="#DCCBB8" stroke-width="1"/>
+    <!-- sage base band -->
+    <path d="M312 768 L488 768 L488 782 C488 788 483 796 475 796 L325 796 C317 796 312 788 312 782 Z" fill="#7E9A78" opacity="0.9"/>
+    <!-- arc motif -->
+    <path d="M344 654 C 368 610 432 610 456 654" fill="none" stroke="#B87F68" stroke-width="2.4" stroke-linecap="round"/>
+    <circle cx="400" cy="628" r="4" fill="#B87F68"/>
+    <!-- wordmark -->
+    <text x="400" y="706" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" letter-spacing="4" fill="#3A342E">NUVELLA</text>
+    <text x="400" y="736" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="11.5" letter-spacing="3.4" fill="#6B6157">DAILY COMFORT</text>
+    <text x="400" y="756" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="9.5" letter-spacing="3" fill="#8C8177">BABY LOTION</text>
+    <!-- volume -->
+    <text x="400" y="818" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" letter-spacing="2.6" fill="#FAF6F1" opacity="0.95">250 ml / 8.5 fl oz</text>
+    <!-- specular sweep -->
+    <path d="M330 570 L352 570 L336 780 L318 780 Z" fill="#FFFFFF" opacity="0.16"/>
+  </g>
+
+  <!-- caption -->
+  <text x="400" y="960" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12" letter-spacing="2.6" fill="#8C8177" opacity="0.85">DEMO VISUAL — REPLACE WITH PRODUCT PHOTOGRAPHY</text>
+</svg>

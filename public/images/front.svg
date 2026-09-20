@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" width="900" height="900" role="img" aria-label="Demo front product shot: straight-on view of the Nuvella baby lotion bottle on a seamless cream background">
+  <defs>
+    <linearGradient id="bgf" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#FDFBF9"/>
+      <stop offset="100%" stop-color="#F1E7DC"/>
+    </linearGradient>
+    <linearGradient id="bodyf" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#D3A78C"/>
+      <stop offset="20%" stop-color="#EACDB9"/>
+      <stop offset="45%" stop-color="#F4E2D4"/>
+      <stop offset="68%" stop-color="#E2C0A8"/>
+      <stop offset="100%" stop-color="#C2967C"/>
+    </linearGradient>
+    <linearGradient id="metalf" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#B4ADA4"/>
+      <stop offset="25%" stop-color="#E8E3DC"/>
+      <stop offset="55%" stop-color="#CDC6BD"/>
+      <stop offset="100%" stop-color="#ABA49B"/>
+    </linearGradient>
+    <linearGradient id="labelf" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#EFE2D4"/>
+      <stop offset="52%" stop-color="#FDF9F4"/>
+      <stop offset="100%" stop-color="#E8D8C8"/>
+    </linearGradient>
+    <filter id="s1"><feGaussianBlur stdDeviation="14"/></filter>
+    <filter id="s2"><feGaussianBlur stdDeviation="26"/></filter>
+  </defs>
+
+  <rect width="900" height="900" fill="url(#bgf)"/>
+  <path d="M40 700 C 260 470 640 470 860 700" fill="none" stroke="#B87F68" stroke-opacity="0.13" stroke-width="2"/>
+
+  <ellipse cx="450" cy="742" rx="200" ry="26" fill="#C9A88F" opacity="0.3" filter="url(#s2)"/>
+  <ellipse cx="450" cy="742" rx="96" ry="14" fill="#8C6A55" opacity="0.28" filter="url(#s1)"/>
+
+  <g transform="translate(140 60)">
+    <path d="M252 168 L288 168 L288 196 L252 196 Q241 196 241 182 Q241 168 252 168 Z" fill="url(#metalf)"/>
+    <rect x="278" y="152" width="102" height="46" rx="21" fill="url(#metalf)"/>
+    <rect x="278" y="152" width="102" height="15" rx="7" fill="#FFFFFF" opacity="0.34"/>
+    <rect x="313" y="194" width="34" height="44" rx="9" fill="#C4BDB4"/>
+    <rect x="292" y="232" width="76" height="56" rx="13" fill="url(#metalf)"/>
+    <rect x="292" y="248" width="76" height="3" fill="#8F887F" opacity="0.5"/>
+    <rect x="292" y="270" width="76" height="3" fill="#8F887F" opacity="0.32"/>
+
+    <path d="M300 288 L300 282 L360 282 L360 288
+             C 404 302 442 342 442 408
+             L 442 828
+             C 442 862 415 886 382 886
+             L 278 886
+             C 245 886 218 862 218 828
+             L 218 408
+             C 218 342 256 302 300 288 Z"
+          fill="url(#bodyf)"/>
+    <path d="M238 430 L238 812 C238 840 256 860 282 864" fill="none" stroke="#FFF7EF" stroke-opacity="0.6" stroke-width="10" stroke-linecap="round"/>
+    <path d="M424 448 L424 800" fill="none" stroke="#A97F67" stroke-opacity="0.32" stroke-width="11" stroke-linecap="round"/>
+
+    <rect x="234" y="452" width="192" height="330" rx="16" fill="url(#labelf)"/>
+    <rect x="234" y="452" width="192" height="330" rx="16" fill="none" stroke="#DCCBB8"/>
+    <path d="M234 744 L426 744 L426 760 C426 772 418 782 404 782 L256 782 C242 782 234 772 234 760 Z" fill="#7E9A78" opacity="0.9"/>
+
+    <path d="M270 566 C 298 512 362 512 390 566" fill="none" stroke="#B87F68" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="330" cy="536" r="4.4" fill="#B87F68"/>
+    <text x="330" y="624" text-anchor="middle" font-family="Georgia, serif" font-size="38" letter-spacing="4.5" fill="#3A342E">NUVELLA</text>
+    <text x="330" y="656" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.5" letter-spacing="3.8" fill="#6B6157">DAILY COMFORT</text>
+    <text x="330" y="678" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" letter-spacing="3.2" fill="#8C8177">BABY LOTION</text>
+    <text x="330" y="712" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="9" letter-spacing="2.4" fill="#9C9186">GENTLE · LIGHTWEIGHT · EVERYDAY</text>
+    <text x="330" y="808" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="11" letter-spacing="2.8" fill="#FAF6F1">250 ml / 8.5 fl oz</text>
+    <path d="M254 462 L278 462 L260 760 L240 760 Z" fill="#FFFFFF" opacity="0.15"/>
+  </g>
+
+  <text x="450" y="866" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" letter-spacing="2.8" fill="#8C8177" opacity="0.85">FRONT PACKSHOT — DEMO VISUAL</text>
+</svg>

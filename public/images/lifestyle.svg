@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Demo lifestyle image: a parent's hands smoothing lotion onto a baby's arm on a linen changing mat in soft morning light">
+  <defs>
+    <linearGradient id="bgl" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0%" stop-color="#FFF9F3"/>
+      <stop offset="48%" stop-color="#F6EADC"/>
+      <stop offset="100%" stop-color="#E7D6C4"/>
+    </linearGradient>
+    <linearGradient id="linen" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%" stop-color="#FCF7F0"/>
+      <stop offset="100%" stop-color="#E9DCCB"/>
+    </linearGradient>
+    <linearGradient id="skinA" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#F6DCC4"/>
+      <stop offset="100%" stop-color="#E7BE9E"/>
+    </linearGradient>
+    <linearGradient id="skinB" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#FAE6D3"/>
+      <stop offset="100%" stop-color="#EFC9AC"/>
+    </linearGradient>
+    <linearGradient id="curtain" x1="0" y1="0" x2="1" y2="0.4">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#FFF6EA" stop-opacity="0.15"/>
+    </linearGradient>
+    <filter id="l1"><feGaussianBlur stdDeviation="26"/></filter>
+    <filter id="l2"><feGaussianBlur stdDeviation="9"/></filter>
+    <filter id="l3"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#bgl)"/>
+
+  <!-- window light, upper right -->
+  <g filter="url(#l1)">
+    <path d="M760 -60 L1240 -60 L1240 520 L640 300 Z" fill="#FFFFFF" opacity="0.7"/>
+  </g>
+  <!-- sheer curtain folds -->
+  <g opacity="0.5">
+    <path d="M880 0 L980 0 C 950 200 960 420 930 800 L860 800 C 900 460 880 240 880 0 Z" fill="url(#curtain)"/>
+    <path d="M1040 0 L1120 0 C 1090 240 1100 460 1080 800 L1010 800 C 1050 460 1030 240 1040 0 Z" fill="url(#curtain)"/>
+  </g>
+
+  <!-- changing mat -->
+  <path d="M60 470 C 320 396 900 396 1150 470 L1150 720 C 900 790 320 790 60 720 Z" fill="url(#linen)"/>
+  <path d="M60 470 C 320 396 900 396 1150 470" fill="none" stroke="#DCCBB6" stroke-width="2"/>
+  <!-- mat weave -->
+  <g opacity="0.12" stroke="#B79C80" stroke-width="1">
+    <path d="M120 452 C 380 392 880 392 1110 456"/>
+    <path d="M110 512 C 380 452 880 452 1120 516"/>
+    <path d="M100 572 C 380 512 880 512 1130 576"/>
+    <path d="M90 632 C 380 572 880 572 1140 636"/>
+    <path d="M80 692 C 380 632 880 632 1145 696"/>
+  </g>
+
+  <!-- baby forearm resting on the mat (centre) -->
+  <g filter="url(#l3)">
+    <path d="M300 610 C 420 560 700 552 860 596 C 900 608 900 648 858 660 C 700 700 420 706 300 668 C 262 656 262 622 300 610 Z" fill="url(#skinB)"/>
+    <path d="M330 600 C 440 566 690 560 840 596" fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="9" stroke-linecap="round"/>
+    <!-- tiny hand, fingers curled -->
+    <path d="M846 586 C 892 578 926 592 930 616 C 934 642 906 664 866 662" fill="url(#skinB)"/>
+    <path d="M872 600 C 890 596 904 602 906 616" fill="none" stroke="#D9A883" stroke-width="3" stroke-linecap="round"/>
+    <path d="M878 620 C 896 618 908 624 908 636" fill="none" stroke="#D9A883" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- parent's hand smoothing lotion, from the left -->
+  <g>
+    <path d="M120 250 C 300 292 430 380 470 470 C 486 508 448 540 404 520 C 320 480 200 400 108 352 C 70 332 78 262 120 250 Z" fill="url(#skinA)"/>
+    <path d="M150 268 C 310 312 424 392 462 466" fill="none" stroke="#FFF3E6" stroke-opacity="0.6" stroke-width="11" stroke-linecap="round"/>
+    <!-- fingers -->
+    <path d="M404 520 C 452 546 512 566 552 570 C 580 572 586 604 558 610 C 500 620 420 596 386 560 Z" fill="url(#skinA)"/>
+    <path d="M430 496 C 486 520 548 536 588 536 C 616 536 620 566 592 574 C 532 590 448 566 412 534 Z" fill="url(#skinA)" opacity="0.96"/>
+    <path d="M452 470 C 506 490 566 502 604 500 C 632 498 636 528 608 536 C 548 552 470 532 434 506 Z" fill="url(#skinA)" opacity="0.92"/>
+  </g>
+
+  <!-- lotion sheen where the hand meets the arm -->
+  <ellipse cx="520" cy="556" rx="70" ry="26" fill="#FFFFFF" opacity="0.5" filter="url(#l2)"/>
+  <ellipse cx="470" cy="540" rx="34" ry="12" fill="#FFFFFF" opacity="0.65" filter="url(#l2)"/>
+
+  <!-- soft foreground fold of cloth, out of focus -->
+  <path d="M-40 720 C 200 690 320 760 260 840 L-40 840 Z" fill="#EFE2D2" opacity="0.9" filter="url(#l2)"/>
+
+  <text x="600" y="766" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="14" letter-spacing="3" fill="#8A7B6B" opacity="0.8">LIFESTYLE — DEMO VISUAL</text>
+</svg>

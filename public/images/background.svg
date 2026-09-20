@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Demo baby-care themed background: an overhead flat-lay of muslin cloth, a wooden brush, dried oats and a folded towel on warm cream linen">
+  <defs>
+    <linearGradient id="linenbg" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#FBF4EA"/>
+      <stop offset="52%" stop-color="#F4E8DA"/>
+      <stop offset="100%" stop-color="#E9D9C6"/>
+    </linearGradient>
+    <linearGradient id="muslin" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#FDFAF6"/>
+      <stop offset="100%" stop-color="#EFE3D4"/>
+    </linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#D9B58C"/>
+      <stop offset="55%" stop-color="#C39B70"/>
+      <stop offset="100%" stop-color="#A87F55"/>
+    </linearGradient>
+    <filter id="b1"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="b2"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="linenWeave">
+      <feTurbulence type="fractalNoise" baseFrequency="0.7 0.9" numOctaves="3" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.07"/></feComponentTransfer>
+      <feComposite operator="over" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#linenbg)"/>
+  <rect width="1600" height="900" fill="#B99A78" opacity="0.06" filter="url(#linenWeave)"/>
+
+  <!-- light wash from the upper left -->
+  <ellipse cx="360" cy="180" rx="620" ry="420" fill="#FFFDF9" opacity="0.7" filter="url(#b1)"/>
+
+  <!-- folded muslin cloth, top right -->
+  <g filter="url(#b2)">
+    <path d="M1000 120 L1480 92 L1520 400 L1036 430 Z" fill="url(#muslin)"/>
+    <path d="M1000 120 L1480 92 L1486 180 L1006 208 Z" fill="#FFFFFF" opacity="0.5"/>
+    <path d="M1036 430 L1520 400 L1524 470 L1042 500 Z" fill="#E9DCCB" opacity="0.75"/>
+    <path d="M1180 100 L1176 420" stroke="#E4D6C4" stroke-width="2" opacity="0.7"/>
+    <path d="M1330 96 L1328 412" stroke="#E4D6C4" stroke-width="2" opacity="0.6"/>
+  </g>
+
+  <!-- wooden hairbrush, centre left -->
+  <g transform="translate(240 430) rotate(-14)" filter="url(#b2)">
+    <rect x="0" y="46" width="330" height="34" rx="17" fill="url(#wood)"/>
+    <ellipse cx="352" cy="63" rx="92" ry="60" fill="url(#wood)"/>
+    <ellipse cx="352" cy="63" rx="76" ry="48" fill="#E9D3B4" opacity="0.85"/>
+    <g fill="#B98F63" opacity="0.75">
+      <circle cx="322" cy="45" r="5"/><circle cx="348" cy="39" r="5"/><circle cx="376" cy="45" r="5"/>
+      <circle cx="316" cy="66" r="5"/><circle cx="344" cy="60" r="5"/><circle cx="372" cy="60" r="5"/><circle cx="398" cy="66" r="5"/>
+      <circle cx="322" cy="88" r="5"/><circle cx="348" cy="92" r="5"/><circle cx="376" cy="88" r="5"/>
+    </g>
+  </g>
+
+  <!-- sprig of dried oats -->
+  <g transform="translate(760 560) rotate(18)">
+    <path d="M0 260 C 20 170 44 96 96 20" fill="none" stroke="#C7B79A" stroke-width="4" stroke-linecap="round"/>
+    <g fill="#DFD0AE" stroke="#C9B894" stroke-width="1.2">
+      <ellipse cx="30" cy="206" rx="10" ry="22" transform="rotate(-26 30 206)"/>
+      <ellipse cx="52" cy="170" rx="10" ry="22" transform="rotate(-24 52 170)"/>
+      <ellipse cx="72" cy="134" rx="10" ry="22" transform="rotate(-22 72 134)"/>
+      <ellipse cx="92" cy="98" rx="10" ry="22" transform="rotate(-20 92 98)"/>
+      <ellipse cx="110" cy="62" rx="10" ry="22" transform="rotate(-18 110 62)"/>
+      <ellipse cx="58" cy="196" rx="10" ry="22" transform="rotate(18 58 196)"/>
+      <ellipse cx="80" cy="160" rx="10" ry="22" transform="rotate(20 80 160)"/>
+      <ellipse cx="100" cy="124" rx="10" ry="22" transform="rotate(22 100 124)"/>
+      <ellipse cx="120" cy="88" rx="10" ry="22" transform="rotate(24 120 88)"/>
+    </g>
+  </g>
+
+  <!-- folded towel, bottom right -->
+  <g filter="url(#b2)">
+    <path d="M980 620 L1460 590 L1490 830 L1010 860 Z" fill="#F3E7D8"/>
+    <path d="M980 620 L1460 590 L1464 646 L984 676 Z" fill="#FFFFFF" opacity="0.45"/>
+    <path d="M1010 860 L1490 830 L1492 862 L1012 892 Z" fill="#E4D3BE" opacity="0.8"/>
+  </g>
+
+  <!-- a few scattered oat grains -->
+  <g fill="#DCCBA8" opacity="0.85">
+    <ellipse cx="640" cy="742" rx="7" ry="14" transform="rotate(32 640 742)"/>
+    <ellipse cx="672" cy="768" rx="7" ry="14" transform="rotate(-18 672 768)"/>
+    <ellipse cx="612" cy="786" rx="7" ry="14" transform="rotate(64 612 786)"/>
+  </g>
+
+  <!-- vignette so headline text stays readable -->
+  <rect width="1600" height="900" fill="url(#linenbg)" opacity="0.28"/>
+</svg>
