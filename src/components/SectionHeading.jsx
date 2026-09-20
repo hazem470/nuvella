@@ -2,7 +2,8 @@ import Reveal from './Reveal.jsx'
 
 /**
  * SectionHeading — the shared eyebrow / title / subtitle lockup.
- * `align` = 'center' | 'left'. `tone` = 'light' (on cream) | 'dark' (on ink).
+ * Text alignment follows the writing direction automatically (`text-start`
+ * rather than `text-left`), so Arabic RTL needs no special casing.
  */
 export default function SectionHeading({
   eyebrow,
@@ -15,7 +16,7 @@ export default function SectionHeading({
 }) {
   const isCenter = align === 'center'
   return (
-    <Reveal className={`${isCenter ? 'mx-auto max-w-3xl text-center' : 'max-w-2xl'} ${className}`}>
+    <Reveal className={`${isCenter ? 'mx-auto max-w-3xl text-center' : 'max-w-2xl text-start'} ${className}`}>
       {eyebrow && (
         <p className={`eyebrow ${isCenter ? 'justify-center' : ''} ${tone === 'dark' ? 'text-clay-300' : ''}`}>
           <span aria-hidden="true" className="h-px w-8 bg-current opacity-50" />

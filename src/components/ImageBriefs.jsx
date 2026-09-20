@@ -1,15 +1,16 @@
 import { useState } from 'react'
-import { imageBriefs } from '../data/brand.js'
+import { useLang } from '../i18n/LanguageContext.jsx'
 import Icon from './Icon.jsx'
 import Reveal from './Reveal.jsx'
 import SectionHeading from './SectionHeading.jsx'
 
 /**
- * ImageBriefs — an optional, collapsible appendix that documents every required
- * photograph, its art direction, and a ready-to-use generation prompt. Hand this
- * page to a photographer or a diffusion model to replace the demo SVGs.
+ * ImageBriefs — a collapsible appendix documenting every required photograph,
+ * its art direction, and a ready-to-use generation prompt.
+ * Prompts stay in English (they are tool input, not page copy).
  */
 export default function ImageBriefs() {
+  const { t } = useLang()
   const [open, setOpen] = useState(false)
 
   return (
@@ -18,9 +19,9 @@ export default function ImageBriefs() {
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeading
             align="left"
-            eyebrow="For the design team"
-            title="Photography briefs"
-            subtitle="Every visual on this page is a self-contained demo illustration. Below is the art direction and a ready-to-use prompt for the real photograph that replaces it."
+            eyebrow={t.ui.briefsEyebrow}
+            title={t.ui.briefsTitle}
+            subtitle={t.ui.briefsSub}
           />
           <button
             type="button"
@@ -29,7 +30,7 @@ export default function ImageBriefs() {
             aria-controls="image-briefs"
             className="btn btn-secondary btn-md shrink-0"
           >
-            {open ? 'Hide briefs' : 'Show briefs'}
+            {open ? t.ui.hideBriefs : t.ui.showBriefs}
             <Icon name="ChevronDown" size={16} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
           </button>
         </div>
@@ -42,7 +43,7 @@ export default function ImageBriefs() {
         >
           <div className="overflow-hidden">
             <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {imageBriefs.map((b, i) => (
+              {t.imageBriefs.map((b, i) => (
                 <Reveal key={b.id} delay={i * 60}>
                   <article className="card h-full p-6">
                     <div className="flex items-start justify-between gap-3">
@@ -58,10 +59,13 @@ export default function ImageBriefs() {
                       <summary className="cursor-pointer list-none text-xs font-medium text-clay-600 hover:text-clay-700">
                         <span className="inline-flex items-center gap-1.5">
                           <Icon name="Sparkle" size={13} />
-                          View generation prompt
+                          {t.ui.viewPrompt}
                         </span>
                       </summary>
-                      <p className="mt-3 rounded-2xl bg-cream-100 px-4 py-3 font-mono text-[0.7rem] leading-relaxed text-ink-500">
+                      <p
+                        className="mt-3 rounded-2xl bg-cream-100 px-4 py-3 font-mono text-[0.7rem] leading-relaxed text-ink-500"
+                        dir="ltr"
+                      >
                         {b.prompt}
                       </p>
                     </details>
@@ -71,11 +75,19 @@ export default function ImageBriefs() {
             </div>
 
             <p className="mt-8 rounded-2xl bg-cream-200/70 px-5 py-4 text-xs leading-relaxed text-ink-500">
-              Replace the demo SVGs in <code className="font-mono">public/images/</code> with your own
-              licensed photography, keeping the same filenames — or point{' '}
-              <code className="font-mono">imageAssets</code> in{' '}
-              <code className="font-mono">src/data/brand.js</code> at new paths. Do not link to
-              third-party image URLs you do not have rights to use.
+              {t.ui.briefsNote1}{' '}
+              <code className="font-mono" dir="ltr">
+                public/images/
+              </code>{' '}
+              {t.ui.briefsNote2}{' '}
+              <code className="font-mono" dir="ltr">
+                imageAssets
+              </code>{' '}
+              {t.ui.briefsNote3}{' '}
+              <code className="font-mono" dir="ltr">
+                src/i18n/content.en.js
+              </code>{' '}
+              {t.ui.briefsNote4}
             </p>
           </div>
         </div>

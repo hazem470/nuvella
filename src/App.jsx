@@ -1,4 +1,6 @@
 import { CartProvider } from './context/CartContext.jsx'
+import { LanguageProvider, useLang } from './i18n/LanguageContext.jsx'
+import AnnouncementBanner from './components/AnnouncementBanner.jsx'
 import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
 import ProductSection from './components/ProductSection.jsx'
@@ -15,40 +17,54 @@ import Toast from './components/Toast.jsx'
 
 /**
  * Nuvella — premium baby-care storefront.
- * Single-page, anchor-navigated layout. Every section is an independent,
- * reusable component driven by src/data/brand.js.
+ *
+ * LanguageProvider wraps everything so every component reads copy from the
+ * active dictionary and the layout flips between LTR (English) and RTL (Arabic).
+ * CartProvider sits inside it because cart notifications are localised.
  */
-export default function App() {
+function Shell() {
+  const { t } = useLang()
+
   return (
-    <CartProvider>
-      {/* Skip link for keyboard and screen-reader users */}
+    <div className="min-h-screen bg-cream-100">
       <a
         href="#product"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink-700 focus:px-5 focus:py-3 focus:text-sm focus:text-cream-50"
+        className="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink-700 focus:px-5 focus:py-3 focus:text-sm focus:text-cream-50"
       >
-        Skip to product
+        {t.ui.skipToProduct}
       </a>
 
-      <div className="min-h-screen bg-cream-100">
-        <Navbar />
+      {/* Pre-launch notice sits above the navbar, outside the sticky layer */}
+      <AnnouncementBanner />
 
-        <main id="main">
-          <Hero />
-          <ProductSection />
-          <BrandStory />
-          <Benefits />
-          <Ingredients />
-          <Reviews />
-          <FAQ />
-          <FinalCTA />
-          <ImageBriefs />
-        </main>
+      <Navbar />
 
-        <Footer />
+      <main id="main">
+        <Hero />
+        <ProductSection />
+        <BrandStory />
+        <Benefits />
+        <Ingredients />
+        <Reviews />
+        <FAQ />
+        <FinalCTA />
+        <ImageBriefs />
+      </main>
 
-        <CartDrawer />
-        <Toast />
-      </div>
-    </CartProvider>
+      <Footer />
+
+      <CartDrawer />
+      <Toast />
+    </div>
+  )
+}
+
+export default function App() {
+  return (
+    <LanguageProvider>
+      <CartProvider>
+        <Shell />
+      </CartProvider>
+    </LanguageProvider>
   )
 }

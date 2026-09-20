@@ -1,23 +1,36 @@
 import { useCart } from '../context/CartContext.jsx'
+import { useLang } from '../i18n/LanguageContext.jsx'
 import { useBodyLock, useEscape } from '../hooks/useReveal.js'
-import { product, trustBadges } from '../data/brand.js'
+import { config } from '../config.js'
 import Icon from './Icon.jsx'
 import QuantityStepper from './QuantityStepper.jsx'
-
-const money = (n, sym = product.currencySymbol) =>
-  `${sym}${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+import TelegramButton from './TelegramButton.jsx'
 
 /**
  * CartDrawer — slide-in bag with quantity controls, remove, and an order summary.
+ * Prices are EGP; checkout is gated behind config.preLaunch.
  */
 export default function CartDrawer() {
-  const { items, isOpen, close, setQty, removeItem, subtotal, shipping, total, clear, notify } = useCart()
+  const {
+    items,
+    isOpen,
+    close,
+    setQty,
+    removeItem,
+    subtotal,
+    shipping,
+    total,
+    freeShippingThreshold,
+    clear,
+    notify,
+  } = useCart()
+  const { t, isRTL, price } = useLang()
 
   useBodyLock(isOpen)
   useEscape(close, isOpen)
 
   const checkout = () => {
-    notify('Checkout is disabled in this demo build.', 'success')
+    notify(config.preLaunch ? t.ui.cartCheckoutNote : t.ui.cartCheckoutDemo)
   }
 
   return (
@@ -33,20 +46,21 @@ export default function CartDrawer() {
         }`}
       />
 
-      {/* Panel */}
+      {/* Panel — anchored with logical `end-0` so it slides in from the correct
+          side in both LTR and RTL. */}
       <aside
         role="dialog"
         aria-modal="true"
-        aria-label="Shopping bag"
-        className={`absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-cream-100 shadow-lift transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        aria-label={t.ui.cartTitle}
+        className={`absolute inset-y-0 end-0 flex w-full max-w-md flex-col bg-cream-100 shadow-lift transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          isOpen ? 'translate-x-0' : isRTL ? '-translate-x-full' : 'translate-x-full'
         }`}
       >
         {/* Header */}
         <header className="flex items-center justify-between border-b border-ink-700/5 px-6 py-5">
           <div className="flex items-center gap-3">
             <Icon name="ShoppingBag" size={20} className="text-clay-500" />
-            <h2 className="font-display text-lg text-ink-900">Your Bag</h2>
+            <h2 className="font-display text-lg text-ink-900">{t.ui.cartTitle}</h2>
             <span className="rounded-full bg-cream-200 px-2.5 py-0.5 text-xs font-medium text-ink-500">
               {items.reduce((n, l) => n + l.qty, 0)}
             </span>
@@ -54,7 +68,7 @@ export default function CartDrawer() {
           <button
             type="button"
             onClick={close}
-            aria-label="Close shopping bag"
+            aria-label={t.ui.a11yCloseBag}
             className="grid h-9 w-9 place-items-center rounded-full text-ink-500 transition-colors hover:bg-cream-200 hover:text-ink-900"
           >
             <Icon name="Plus" size={18} className="rotate-45" strokeWidth={2} />
@@ -69,14 +83,12 @@ export default function CartDrawer() {
                 <Icon name="ShoppingBag" size={26} />
               </span>
               <div>
-                <p className="font-display text-lg text-ink-900">Your bag is empty</p>
-                <p className="mt-1 text-sm text-ink-500">
-                  Add Daily Comfort Baby Lotion to get started.
-                </p>
+                <p className="font-display text-lg text-ink-900">{t.ui.cartEmpty}</p>
+                <p className="mt-1 text-sm text-ink-500">{t.ui.cartEmptyHint}</p>
               </div>
               <button type="button" onClick={close} className="btn btn-primary btn-md mt-2">
-                Continue Shopping
-                <Icon name="ArrowRight" size={16} />
+                {t.ui.continueShopping}
+                <Icon name="ArrowRight" size={16} className={isRTL ? 'rotate-180' : ''} />
               </button>
             </div>
           ) : (
@@ -84,12 +96,7 @@ export default function CartDrawer() {
               {items.map((line) => (
                 <li key={line.key} className="card flex gap-4 p-4">
                   <div className="h-24 w-20 shrink-0 overflow-hidden rounded-2xl bg-cream-200">
-                    <img
-                      src={line.image}
-                      alt=""
-                      className="h-full w-full object-cover"
-                      loading="lazy"
-                    />
+                    <img src={line.image} alt="" className="h-full w-full object-cover" loading="lazy" />
                   </div>
 
                   <div className="flex min-w-0 flex-1 flex-col">
@@ -104,7 +111,7 @@ export default function CartDrawer() {
                       <button
                         type="button"
                         onClick={() => removeItem(line.key)}
-                        aria-label={`Remove ${line.name} from bag`}
+                        aria-label={`${t.ui.a11yRemove} ${line.name} ${t.ui.a11yRemoveFromBag}`}
                         className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-ink-400 transition-colors hover:bg-cream-200 hover:text-clay-600"
                       >
                         <Icon name="Plus" size={15} className="rotate-45" strokeWidth={2} />
@@ -117,10 +124,10 @@ export default function CartDrawer() {
                         value={line.qty}
                         setValue={(fn) => setQty(line.key, fn)}
                         min={0}
-                        label={`Quantity for ${line.name}`}
+                        label={`${t.ui.a11yQuantityFor} ${line.name}`}
                       />
                       <p className="font-display text-base text-ink-900 tabular-nums">
-                        {money(line.price * line.qty)}
+                        {price(line.price * line.qty)}
                       </p>
                     </div>
                   </div>
@@ -135,49 +142,56 @@ export default function CartDrawer() {
           <footer className="border-t border-ink-700/5 bg-cream-50 px-6 py-5">
             <dl className="space-y-2 text-sm">
               <div className="flex items-center justify-between">
-                <dt className="text-ink-500">Subtotal</dt>
-                <dd className="font-medium text-ink-900 tabular-nums">{money(subtotal)}</dd>
+                <dt className="text-ink-500">{t.ui.cartSubtotal}</dt>
+                <dd className="font-medium text-ink-900 tabular-nums">{price(subtotal)}</dd>
               </div>
               <div className="flex items-center justify-between">
-                <dt className="text-ink-500">Shipping</dt>
+                <dt className="text-ink-500">{t.ui.cartShipping}</dt>
                 <dd className="font-medium text-ink-900 tabular-nums">
-                  {shipping === 0 ? 'Free' : money(shipping)}
+                  {shipping === 0 ? t.ui.cartFree : price(shipping)}
                 </dd>
               </div>
               <div className="hairline my-3" />
               <div className="flex items-center justify-between">
-                <dt className="font-display text-base text-ink-900">Total</dt>
-                <dd className="font-display text-lg text-ink-900 tabular-nums">{money(total)}</dd>
+                <dt className="font-display text-base text-ink-900">{t.ui.cartTotal}</dt>
+                <dd className="font-display text-lg text-ink-900 tabular-nums">{price(total)}</dd>
               </div>
             </dl>
 
             {shipping > 0 && (
               <p className="mt-3 rounded-2xl bg-sage-100 px-4 py-2.5 text-xs text-sage-600">
-                Add {money(60 - subtotal)} more for free shipping.
+                {t.ui.cartFreeShipPrefix} {price(freeShippingThreshold - subtotal)}{' '}
+                {t.ui.cartFreeShipSuffix}
               </p>
             )}
 
             <div className="mt-5 flex flex-col gap-2.5">
               <button type="button" onClick={checkout} className="btn btn-primary btn-lg w-full">
                 <Icon name="Lock" size={17} />
-                Proceed to Checkout
+                {t.ui.cartCheckout}
               </button>
+
+              {/* Pre-launch: the primary follow-up action is Telegram */}
+              {config.preLaunch && (
+                <TelegramButton variant="outline" className="w-full" showHandle={false} />
+              )}
+
               <div className="flex items-center justify-between gap-2">
                 <button type="button" onClick={close} className="btn btn-ghost btn-sm">
-                  Continue Shopping
+                  {t.ui.continueShopping}
                 </button>
                 <button
                   type="button"
                   onClick={clear}
                   className="btn btn-ghost btn-sm text-ink-400 hover:text-clay-600"
                 >
-                  Clear bag
+                  {t.ui.clearBag}
                 </button>
               </div>
             </div>
 
             <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-              {trustBadges.slice(0, 3).map((b) => (
+              {t.trustBadges.slice(0, 3).map((b) => (
                 <li key={b.text} className="inline-flex items-center gap-1.5 text-[0.7rem] text-ink-400">
                   <Icon name={b.icon} size={13} />
                   {b.text}

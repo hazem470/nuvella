@@ -6,13 +6,38 @@
    Nuvella — base layer
    ───────────────────────────────────────────────────────────── */
 @layer base {
-  :root {
-    --navella-cream: #faf6f1;
-  }
-
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+  }
+
+  /* ── Bilingual typography ───────────────────────────────────────
+     Arabic gets a font stack with real Arabic faces (Tajawal / Cairo if the
+     user has them, then the OS Arabic UI font). Latin display fonts are
+     dropped for Arabic so the script never falls back to a mismatched face. */
+  html[lang='ar'] body {
+    font-family: 'Tajawal', 'Cairo', 'Segoe UI', 'Noto Naskh Arabic', 'Traditional Arabic', sans-serif;
+  }
+
+  html[lang='ar'] h1,
+  html[lang='ar'] h2,
+  html[lang='ar'] h3,
+  html[lang='ar'] h4 {
+    font-family: 'Tajawal', 'Cairo', 'Segoe UI', 'Noto Naskh Arabic', sans-serif;
+    letter-spacing: 0;
+    line-height: 1.45;
+  }
+
+  /* Arabic script has no letter case; wide tracking hurts legibility. */
+  html[lang='ar'] .eyebrow {
+    letter-spacing: 0.06em;
+  }
+
+  /* Latin-only snippets (prices, handles, prompts) must stay LTR in RTL mode. */
+  html[dir='rtl'] .force-ltr {
+    direction: ltr;
+    unicode-bidi: isolate;
+    display: inline-block;
   }
 
   body {

@@ -1,10 +1,13 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react'
-import { product } from '../data/brand.js'
+import { config } from '../config.js'
 
 /**
  * CartProvider — a small, dependency-free cart store.
  * Persists to localStorage, exposes add / remove / setQty / clear and derived
  * totals, plus a transient `notice` used for toast notifications.
+ *
+ * Totals are computed in EGP using config.pricing, so repricing the store is a
+ * one-file change.
  */
 
 const CartContext = createContext(null)
@@ -95,9 +98,11 @@ export function CartProvider({ children }) {
   }, [])
 
   const addItem = useCallback(
-    (item, { openDrawer = false } = {}) => {
+    (item, { openDrawer = false, message } = {}) => {
       dispatch({ type: 'add', item })
-      notify(`${item.name} added to your bag.`)
+      // `message` lets the caller supply a localised string. The fallback keeps
+      // the API usable from anywhere that does not care about translation.
+      notify(message ?? `${item.name} added to your bag.`)
       if (openDrawer) setOpen(true)
     },
     [notify],
@@ -118,14 +123,15 @@ export function CartProvider({ children }) {
   const value = useMemo(() => {
     const count = items.reduce((n, l) => n + l.qty, 0)
     const subtotal = items.reduce((n, l) => n + l.qty * l.price, 0)
-    const shipping = subtotal === 0 || subtotal >= 60 ? 0 : 6
+    const { freeShippingThreshold, shippingFee } = config.pricing
+    const shipping = subtotal === 0 || subtotal >= freeShippingThreshold ? 0 : shippingFee
     return {
       items,
       count,
       subtotal,
       shipping,
       total: subtotal + shipping,
-      currencySymbol: product.currencySymbol,
+      freeShippingThreshold,
       isOpen,
       open: () => setOpen(true),
       close: () => setOpen(false),

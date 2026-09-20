@@ -1,12 +1,14 @@
 import { useCart } from '../context/CartContext.jsx'
+import { useLang } from '../i18n/LanguageContext.jsx'
 import Icon from './Icon.jsx'
 
 /**
  * Toast — a single, unobtrusive notification for cart actions.
- * Fixed bottom-centre on mobile, bottom-right on larger screens.
+ * Position and icon direction mirror automatically under RTL.
  */
 export default function Toast() {
   const { notice, dismissNotice } = useCart()
+  const { t } = useLang()
   if (!notice) return null
 
   const tone =
@@ -18,7 +20,7 @@ export default function Toast() {
     <div
       role="status"
       aria-live="polite"
-      className="pointer-events-none fixed inset-x-0 bottom-6 z-[80] flex justify-center px-4 sm:inset-x-auto sm:right-6 sm:justify-end"
+      className="pointer-events-none fixed inset-x-0 bottom-6 z-[80] flex justify-center px-4 sm:inset-x-auto sm:end-6 sm:justify-end"
     >
       <div
         key={notice.id}
@@ -31,8 +33,8 @@ export default function Toast() {
         <button
           type="button"
           onClick={dismissNotice}
-          aria-label="Dismiss notification"
-          className="ml-1 rounded-full p-1 text-ink-400 transition-colors hover:bg-ink-700/5 hover:text-ink-700"
+          aria-label={t.ui.a11yDismiss}
+          className="ms-1 rounded-full p-1 text-ink-400 transition-colors hover:bg-ink-700/5 hover:text-ink-700"
         >
           <Icon name="Plus" size={14} className="rotate-45" strokeWidth={2} />
         </button>

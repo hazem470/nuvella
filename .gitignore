@@ -15,3 +15,7 @@ tools/cloudflared.exe
 
 # Generated single-file build (345 KB, reproducible via scripts/build-standalone.mjs)
 preview/*.html
+
+# Preview screenshots are regenerable via scripts/screenshots*.mjs
+preview/i18n-*.png
+preview/github-pages-live.png

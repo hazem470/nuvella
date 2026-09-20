@@ -1,15 +1,23 @@
 import { useState } from 'react'
-import { brand, contact, footerLinks, legal, social } from '../data/brand.js'
+import { config } from '../config.js'
+import { useLang } from '../i18n/LanguageContext.jsx'
 import Icon from './Icon.jsx'
 import Wordmark from './Wordmark.jsx'
 
 /**
- * Footer — brand column, three link columns, contact block, socials and the
- * legal strip with privacy / terms modals.
+ * Footer — brand column, three link columns, contact block (Telegram first),
+ * socials and the legal strip with privacy / terms modals.
  */
 export default function Footer() {
+  const { t, isRTL } = useLang()
   const [modal, setModal] = useState(null)
   const year = new Date().getFullYear()
+
+  const columns = [
+    { title: t.ui.footerAboutTitle, aria: t.ui.a11yAbout, links: t.footerLinks.about },
+    { title: t.ui.footerQuickLinks, aria: t.ui.a11yQuickLinks, links: t.footerLinks.quickLinks },
+    { title: t.ui.footerCustomerCare, aria: t.ui.a11yCustomerCare, links: t.footerLinks.customerCare },
+  ]
 
   return (
     <>
@@ -18,7 +26,7 @@ export default function Footer() {
           <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10">
             {/* Brand column */}
             <div className="max-w-sm">
-              <a href="#home" className="inline-flex items-center gap-2.5" aria-label="Nuvella — home">
+              <a href="#home" className="inline-flex items-center gap-2.5" aria-label={t.ui.a11yHome}>
                 <span className="grid h-10 w-10 place-items-center rounded-2xl bg-clay-500 text-cream-50">
                   <Icon name="Baby" size={20} strokeWidth={1.7} />
                 </span>
@@ -26,16 +34,39 @@ export default function Footer() {
               </a>
 
               <p className="mt-5 text-sm leading-relaxed text-ink-500">
-                {brand.tagline} A small, considered range of everyday baby care — made to be used
-                daily and thought about rarely.
+                {t.brand.tagline} {t.ui.footerAbout}
               </p>
 
+              {/* Telegram — prominent in the footer, above the socials */}
+              <div className="mt-6">
+                <p className="mb-2.5 text-xs uppercase tracking-[0.16em] text-ink-400">
+                  {t.ui.footerTelegramHeading}
+                </p>
+                <a
+                  href={config.contact.telegram.url}
+                  target="_blank"
+                  rel={config.contact.telegram.rel}
+                  aria-label={t.ui.a11yTelegram}
+                  className="inline-flex items-center gap-3 rounded-2xl border border-[#229ED9]/25 bg-[#229ED9]/8 px-4 py-3 text-sm font-medium text-ink-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#229ED9]/50 hover:bg-[#229ED9]/12"
+                >
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#229ED9] text-white">
+                    <Icon name="Send" size={17} />
+                  </span>
+                  <span>
+                    <span className="block">{t.contact.telegramLabel}</span>
+                    <span className="block text-xs text-ink-400" dir="ltr">
+                      {t.contact.telegramHandle}
+                    </span>
+                  </span>
+                </a>
+              </div>
+
               <ul className="mt-6 flex flex-wrap gap-2">
-                {social.map((s) => (
+                {t.social.map((s) => (
                   <li key={s.label}>
                     <a
                       href={s.href}
-                      aria-label={`${s.label} (placeholder link)`}
+                      aria-label={`${s.label} (${t.ui.a11yPlaceholderLink})`}
                       className="grid h-10 w-10 place-items-center rounded-full border border-ink-700/10 text-ink-500 transition-all duration-300 hover:-translate-y-0.5 hover:border-clay-300 hover:text-clay-600"
                     >
                       <Icon name={s.icon} size={17} />
@@ -52,7 +83,7 @@ export default function Footer() {
                 }}
               >
                 <label htmlFor="footer-email" className="text-xs uppercase tracking-[0.16em] text-ink-400">
-                  Join the quiet list
+                  {t.ui.footerNewsletterLabel}
                 </label>
                 <div className="mt-2.5 flex gap-2">
                   <input
@@ -62,70 +93,64 @@ export default function Footer() {
                     placeholder="you@example.com"
                     className="field"
                     autoComplete="email"
+                    dir="ltr"
                   />
                   <button
                     type="submit"
                     className="btn btn-primary shrink-0 px-4"
-                    aria-label="Subscribe to the newsletter"
+                    aria-label={t.ui.a11ySubscribe}
                   >
-                    <Icon name="Send" size={17} />
+                    <Icon name="Send" size={17} className={isRTL ? 'rotate-180' : ''} />
                   </button>
                 </div>
-                <p className="mt-2 text-[0.7rem] text-ink-400">
-                  Demo form — no data is transmitted or stored.
-                </p>
+                <p className="mt-2 text-[0.7rem] text-ink-400">{t.ui.footerNewsletterNote}</p>
               </form>
             </div>
 
-            {/* About */}
-            <nav aria-label="About">
-              <h2 className="font-display text-base text-ink-900">About</h2>
-              <ul className="mt-5 space-y-3">
-                {footerLinks.about.map((l) => (
-                  <li key={l.label}>
-                    <a href={l.href} className="link-underline text-sm">
-                      {l.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            {/* Quick links */}
-            <nav aria-label="Quick links">
-              <h2 className="font-display text-base text-ink-900">Quick Links</h2>
-              <ul className="mt-5 space-y-3">
-                {footerLinks.quickLinks.map((l) => (
-                  <li key={l.label}>
-                    <a href={l.href} className="link-underline text-sm">
-                      {l.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            {/* Customer care */}
-            <nav aria-label="Customer care">
-              <h2 className="font-display text-base text-ink-900">Customer Care</h2>
-              <ul className="mt-5 space-y-3">
-                {footerLinks.customerCare.map((l) => (
-                  <li key={l.label}>
-                    <a href={l.href} className="link-underline text-sm">
-                      {l.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+            {/* Link columns */}
+            {columns.map((col) => (
+              <nav key={col.title} aria-label={col.aria}>
+                <h2 className="font-display text-base text-ink-900">{col.title}</h2>
+                <ul className="mt-5 space-y-3">
+                  {col.links.map((l) => (
+                    <li key={l.label}>
+                      <a href={l.href} className="link-underline text-sm">
+                        {l.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
           </div>
 
           {/* Contact block */}
-          <div id="contact" className="mt-14 grid gap-6 rounded-[2rem] border border-ink-700/5 bg-cream-100 p-8 sm:grid-cols-3">
+          <div
+            id="contact"
+            className="mt-14 grid gap-6 rounded-[2rem] border border-ink-700/5 bg-cream-100 p-8 sm:grid-cols-2 lg:grid-cols-4"
+          >
+            {/* Telegram first — the primary channel */}
+            <a
+              href={config.contact.telegram.url}
+              target="_blank"
+              rel={config.contact.telegram.rel}
+              className="flex items-start gap-3.5 rounded-2xl transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-[#229ED9] text-white shadow-soft">
+                <Icon name="Send" size={17} />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-xs uppercase tracking-[0.14em] text-ink-400">Telegram</span>
+                <span className="mt-1 block text-sm text-ink-700" dir="ltr">
+                  {t.contact.telegramHandle}
+                </span>
+              </span>
+            </a>
+
             {[
-              { icon: 'Mail', label: 'Email', value: contact.email, href: `mailto:${contact.email}` },
-              { icon: 'Phone', label: 'Phone', value: contact.phone },
-              { icon: 'MapPin', label: 'Studio', value: contact.address },
+              { icon: 'Mail', label: t.ui.labelEmail, value: t.contact.email, href: `mailto:${t.contact.email}` },
+              { icon: 'Phone', label: t.ui.labelPhone, value: t.contact.phone, ltr: true },
+              { icon: 'MapPin', label: t.ui.labelStudio, value: t.contact.address },
             ].map((c) => (
               <div key={c.label} className="flex items-start gap-3.5">
                 <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-cream-50 text-clay-500 shadow-soft">
@@ -138,7 +163,12 @@ export default function Footer() {
                       {c.value}
                     </a>
                   ) : (
-                    <p className="mt-1 text-sm leading-relaxed text-ink-700">{c.value}</p>
+                    <p
+                      className="mt-1 text-sm leading-relaxed text-ink-700"
+                      dir={c.ltr ? 'ltr' : undefined}
+                    >
+                      {c.value}
+                    </p>
                   )}
                 </div>
               </div>
@@ -150,15 +180,15 @@ export default function Footer() {
         <div className="border-t border-ink-700/5">
           <div className="container-nuvella flex flex-col items-center justify-between gap-4 py-6 sm:flex-row">
             <p className="text-xs text-ink-400">
-              © {year} {brand.name}. A fictional brand created for this demo storefront.
+              © {year} {t.brand.name}. {t.ui.footerCopyright}
             </p>
 
             <div className="flex items-center gap-6">
               <button type="button" onClick={() => setModal('privacy')} className="link-underline text-xs">
-                Privacy Policy
+                {t.legal.privacyTitle}
               </button>
               <button type="button" onClick={() => setModal('terms')} className="link-underline text-xs">
-                Terms &amp; Conditions
+                {t.legal.termsTitle}
               </button>
             </div>
           </div>
@@ -181,12 +211,12 @@ export default function Footer() {
           >
             <div className="flex items-start justify-between gap-6">
               <h2 id="legal-title" className="font-display text-2xl text-ink-900">
-                {modal === 'privacy' ? legal.privacyTitle : legal.termsTitle}
+                {modal === 'privacy' ? t.legal.privacyTitle : t.legal.termsTitle}
               </h2>
               <button
                 type="button"
                 onClick={() => setModal(null)}
-                aria-label="Close"
+                aria-label={t.ui.close}
                 className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-ink-500 transition-colors hover:bg-cream-200 hover:text-ink-900"
               >
                 <Icon name="Plus" size={18} className="rotate-45" strokeWidth={2} />
@@ -194,14 +224,14 @@ export default function Footer() {
             </div>
 
             <div className="mt-5 space-y-4 text-sm leading-relaxed text-ink-500">
-              {(modal === 'privacy' ? legal.privacy : legal.terms).map((p, i) => (
+              {(modal === 'privacy' ? t.legal.privacy : t.legal.terms).map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
             </div>
 
             <div className="mt-7 flex justify-end">
               <button type="button" onClick={() => setModal(null)} className="btn btn-secondary btn-md">
-                Close
+                {t.ui.close}
               </button>
             </div>
           </div>

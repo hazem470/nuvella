@@ -1,4 +1,4 @@
-import { reviews, product } from '../data/brand.js'
+import { useLang } from '../i18n/LanguageContext.jsx'
 import Icon from './Icon.jsx'
 import Reveal from './Reveal.jsx'
 import SectionHeading from './SectionHeading.jsx'
@@ -17,37 +17,47 @@ const DISTRIBUTION = [
  * clearly labelled as placeholder content.
  */
 export default function Reviews() {
+  const { t, isRTL } = useLang()
+  const locale = isRTL ? 'ar-EG' : 'en-US'
+
   return (
     <section id="reviews" className="section bg-cream-50">
       <div className="container-nuvella">
         <SectionHeading
-          eyebrow="What parents say"
-          title="Reviews from the changing table"
-          subtitle="A small selection of demo testimonials. These are placeholder reviews written for this demo storefront — not real customer feedback."
+          eyebrow={t.ui.reviewsEyebrow}
+          title={t.ui.reviewsTitle}
+          subtitle={t.ui.reviewsSub}
         />
 
         {/* Summary */}
         <Reveal delay={120} className="mt-12">
           <div className="mx-auto flex max-w-3xl flex-col items-center gap-8 rounded-[2rem] border border-ink-700/5 bg-cream-100 p-8 shadow-soft sm:flex-row sm:gap-12">
-            <div className="text-center sm:text-left">
-              <p className="font-display text-5xl text-ink-900">{product.rating}</p>
-              <StarRating value={product.rating} size={17} className="mt-2 justify-center sm:justify-start" />
+            <div className="text-center sm:text-start">
+              <p className="font-display text-5xl text-ink-900">{t.product.rating}</p>
+              <StarRating
+                value={t.product.rating}
+                size={17}
+                className="mt-2 justify-center sm:justify-start"
+              />
               <p className="mt-2 text-xs text-ink-400">
-                Based on {product.ratingCount.toLocaleString('en-US')} demo reviews
+                {t.ui.reviewsBasedOn} {t.product.ratingCount.toLocaleString(locale)}{' '}
+                {t.ui.reviewsDemoWord}
               </p>
             </div>
 
             <ul className="w-full space-y-2">
               {DISTRIBUTION.map((d) => (
                 <li key={d.stars} className="flex items-center gap-3">
-                  <span className="w-10 shrink-0 text-xs text-ink-400">{d.stars} star</span>
+                  <span className="w-14 shrink-0 text-xs text-ink-400">
+                    {d.stars} {isRTL ? 'نجوم' : 'star'}
+                  </span>
                   <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-cream-300">
                     <span
                       className="block h-full rounded-full bg-clay-400 transition-all duration-1000"
                       style={{ width: `${d.pct}%` }}
                     />
                   </span>
-                  <span className="w-9 shrink-0 text-right text-xs text-ink-400">{d.pct}%</span>
+                  <span className="w-9 shrink-0 text-end text-xs text-ink-400">{d.pct}%</span>
                 </li>
               ))}
             </ul>
@@ -56,7 +66,7 @@ export default function Reviews() {
 
         {/* Cards */}
         <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {reviews.map((r, i) => (
+          {t.reviews.map((r, i) => (
             <Reveal key={r.name} delay={i * 80}>
               <article className="card card-hover flex h-full flex-col p-7">
                 <StarRating value={r.rating} size={14} />
@@ -75,9 +85,9 @@ export default function Reviews() {
                     </span>
                   </span>
                   {r.verified && (
-                    <span className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-full bg-sage-100 px-2.5 py-1 text-[0.62rem] uppercase tracking-[0.1em] text-sage-600">
+                    <span className="ms-auto inline-flex shrink-0 items-center gap-1 rounded-full bg-sage-100 px-2.5 py-1 text-[0.62rem] uppercase tracking-[0.1em] text-sage-600">
                       <Icon name="Check" size={10} strokeWidth={2.6} />
-                      Demo
+                      {t.ui.reviewsBadge}
                     </span>
                   )}
                 </footer>
@@ -88,10 +98,7 @@ export default function Reviews() {
 
         <Reveal delay={200} className="mt-8 text-center">
           <p className="mx-auto max-w-2xl rounded-2xl bg-cream-200/70 px-5 py-4 text-xs leading-relaxed text-ink-500">
-            ⚠️ All reviews, names, locations, ratings and review counts shown on this page are
-            fictional placeholder content created for this demo storefront. They must be replaced
-            with verified, consented customer testimonials before any commercial launch — publishing
-            fabricated reviews is unlawful in most markets.
+            {t.ui.reviewsDisclaimer}
           </p>
         </Reveal>
       </div>

@@ -2,17 +2,25 @@ import Icon from './Icon.jsx'
 
 /**
  * StarRating — accessible, read-only star display. Rounds to the nearest half.
+ * In RTL the row is reversed so stars fill from the right, as Arabic readers expect.
  */
-export default function StarRating({ value = 5, size = 15, className = '', showValue = false, count }) {
+export default function StarRating({
+  value = 5,
+  size = 15,
+  className = '',
+  showValue = false,
+  count,
+  locale = 'en-US',
+}) {
   const full = Math.floor(value)
   const hasHalf = value - full >= 0.5
 
   return (
-    <span className={`inline-flex items-center gap-1.5 ${className}`}>
+    <span className={`inline-flex items-center gap-1.5 ${className}`} dir="ltr">
       <span
         className="inline-flex items-center gap-0.5 text-clay-500"
         role="img"
-        aria-label={`Rated ${value} out of 5`}
+        aria-label={`${value} / 5`}
       >
         {Array.from({ length: 5 }).map((_, i) => {
           const filled = i < full
@@ -34,7 +42,7 @@ export default function StarRating({ value = 5, size = 15, className = '', showV
       </span>
       {showValue && <span className="text-xs font-medium text-ink-600">{value.toFixed(1)}</span>}
       {typeof count === 'number' && (
-        <span className="text-xs text-ink-400">({count.toLocaleString('en-US')})</span>
+        <span className="text-xs text-ink-400">({count.toLocaleString(locale)})</span>
       )}
     </span>
   )
